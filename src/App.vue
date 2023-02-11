@@ -1,30 +1,68 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div id="app">
+    <Header />
+    <router-view></router-view>
+  </div>
 </template>
 
+<script>
+import Header from './components/Header.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Header
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+:root {
+  --white: #fff;
+  --shadow-color: #0000000E;
+  --text-color: #111517;
+  --gray: #848484;
+  --main-bg: #FAFAFA;
 }
 
-nav {
-  padding: 30px;
+.dark-mode {
+  --white: #2B3844;
+  --text-color: #fff;
+  --gray: #fff;
+  --shadow-color: rgba(0, 0, 0, 0.0562443);
+  --main-bg: #202C36;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+  background-color: var(--white);
+  font-family: "Nunito Sans", "Arial", sans-serif;
+  font-weight: 400;
+}
+
+.container {
+  max-width: 1320px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 </style>
