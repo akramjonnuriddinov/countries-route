@@ -12,7 +12,7 @@
       <div class="detail__content">
         <img class="detail__img" src="https://picsum.photos/560/401" width="560" height="401" alt="">
         <div class="detail__info">
-          <h3 class="detail__title">Belgium</h3>
+          <h3 class="detail__title">{{ detail.name.common }}</h3>
           <div class="more-info">
             <div>
               <p class="detail__text">
@@ -61,7 +61,30 @@
 <script>
 export default {
   name: 'Detail',
-  props: ['countries']
+  // props: ['countries'],
+  data() {
+    return {
+      KEY: `https://restcountries.com/v3.1/all`,
+      countries: []
+    }
+  },
+  methods: {
+    async getData() {
+      const reques = await fetch(this.KEY)
+      return reques.json()
+    }
+  },
+  created() {
+    this.getData().then((data) => data)
+  },
+  computed: {
+    detailId() {
+      return parseInt(this.$route.id)
+    },
+    detail() {
+      return countries.find(detail => detail.id === this.detailId)
+    }
+  }
 }
 </script>
 

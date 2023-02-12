@@ -2,7 +2,7 @@
   <div class="card" v-for="country in countries">
     <img class="card__img" :src="country.flags.png" width="267" height="160" alt="">
     <div class="card__content">
-      <router-link to="/detail">
+      <router-link :to="'/detail' + country.id">
         <h1 class="card__title">{{ country.name.common }}</h1>
       </router-link>
       <p class="card__text">
@@ -35,10 +35,13 @@ export default {
     async getData() {
       const request = await fetch(this.KEY)
       return request.json()
-    } 
+    }
   },
   created() {
-    this.getData().then((data) => this.countries = data)
+    this.getData().then((data) => {
+      this.countries = data
+      console.log(data)
+    })
   }
 }
 </script>
