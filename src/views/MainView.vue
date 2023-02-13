@@ -39,7 +39,7 @@ export default {
       return request.json()
     }
   },
-  created() {
+  mounted() {
     this.getData().then((data) => {
       this.countries = data
       console.log(data)

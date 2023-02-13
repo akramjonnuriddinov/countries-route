@@ -10,46 +10,45 @@
         <span>Back</span>
       </button>
       <div class="detail__content">
-        <!-- <img class="detail__img" :src="country.flags.png" width="560" height="401" alt=""> -->
+        <img class="detail__img" :src="img_url" width="560" height="401" alt="">
         <div class="detail__info">
-          <h3 class="detail__title" v-if="country">{{ country.name.common }}</h3>
+          <h3 class="detail__title">{{ alphaCode }}</h3>
           <div class="more-info">
             <div>
               <p class="detail__text">
                 <span class="detail__text--bold">Native Name: </span>
-                <span class="detail__text--small">{{ country }}</span>
+                <span class="detail__text--small">{{ name }}</span>
               </p>
               <p class="detail__text">
                 <span class="detail__text--bold">Population: </span>
-                <span class="detail__text--small">11,319,511</span>
+                <span class="detail__text--small">{{ country.population }}</span>
               </p>
               <p class="detail__text">
                 <span class="detail__text--bold">Region: </span>
-                <span class="detail__text--small">Europe</span>
+                <span class="detail__text--small">{{ country.region }}</span>
               </p>
               <p class="detail__text">
                 <span class="detail__text--bold">Sub Region: </span>
-                <span class="detail__text--small">Western Europe</span>
+                <span class="detail__text--small">{{ country.subregion }}</span>
               </p>
               <p class="detail__text">
                 <span class="detail__text--bold">Capital: </span>
-                <span class="detail__text--small">Brussels</span>
+                <span class="detail__text--small">{{ capital }}</span>
               </p>
             </div>
             <div>
               <p class="detail__text">
                 <span class="detail__text--bold">Top Level Domain: </span>
-                <span class="detail__text--small">.be</span>
+                <span class="detail__text--small">{{ domain }}</span>
               </p>
               <p class="detail__text">
                 <span class="detail__text--bold">Currencies: </span>
-                <span class="detail__text--small">Euro</span>
+                <span class="detail__text--small">{{ currencies }}</span>
               </p>
               <p class="detail__text">
                 <span class="detail__text--bold">Languages: </span>
-                <span class="detail__text--small">Dutch, French, German</span>
+                <span class="detail__text--small">{{ languages }}</span>
               </p>
-  
             </div>
           </div>
         </div>
@@ -63,19 +62,34 @@ export default {
   props: ['alphaCode'],
   data() {
     return {
-      country: null,
-      KEY: `https://restcountries.com/v3.1/alpha/`
+      country: [],
+      KEY: `https://restcountries.com/v3.1/alpha/`,
+      name: '',
+      capital: '',
+      img_url: '',
+      languages: '',
+      currencies: '',
+      domain: ''
     }
+  },
+  mounted() {
+    this.getData().then((data) => {
+      this.country = data[0]
+      console.log(data[0])
+      this.capital = this.country.capital[0]
+      this.name = this.country.name.common
+      this.img_url = this.country.flags.png
+      this.languages = this.country.languages
+      this.currencies = this.country.currencies
+      this.domain = this.country.tld[0]
+    })
   },
   methods: {
     async getData() {
       const request = await fetch(this.KEY + this.alphaCode)
-      request.json()
+      return request.json()
     }
   },
-  mounted() {
-    this.getData().then((data) => this.country = data)
-  }
 }
 </script>
 
@@ -123,11 +137,11 @@ export default {
   margin-bottom: 0;
   font-size: 16px;
   line-height: 32px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .detail__text--bold {
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .back-btn {

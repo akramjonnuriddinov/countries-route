@@ -13,7 +13,7 @@
       </p>
       <p class="card__text">
         <span class="card__text--bold">Capital: </span>
-        <span class="card__text--small">{{ country.capital }}</span>
+        <span class="card__text--small">{{ capital }}</span>
       </p>
     </div>
   </div>
@@ -25,6 +25,11 @@ export default {
   props: {
     country: {
       type: Object
+    }
+  },
+  data() {
+    return {
+      capital: this.country.capital[0]
     }
   }
 }
@@ -44,6 +49,7 @@ export default {
   width: 100%;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  object-fit: cover;
 }
 
 .card__content {
