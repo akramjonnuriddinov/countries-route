@@ -4,20 +4,20 @@
       <button class="back-btn" @click="$router.go(-1)">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g id="call-made">
-          <path id="Shape" fill-rule="evenodd" clip-rule="evenodd" d="M6.46447 4.10744L7.64298 5.28596L3.75389 9.17504L18.6031 9.17504L18.6031 10.825L3.75389 10.825L7.64298 14.714L6.46447 15.8926L0.57191 10L6.46447 4.10744Z" fill="currentColor"/>
+            <path id="Shape" fill-rule="evenodd" clip-rule="evenodd" d="M6.46447 4.10744L7.64298 5.28596L3.75389 9.17504L18.6031 9.17504L18.6031 10.825L3.75389 10.825L7.64298 14.714L6.46447 15.8926L0.57191 10L6.46447 4.10744Z" fill="currentColor"/>
           </g>
         </svg>
         <span>Back</span>
       </button>
       <div class="detail__content">
-        <img class="detail__img" src="https://picsum.photos/560/401" width="560" height="401" alt="">
+        <!-- <img class="detail__img" :src="country.flags.png" width="560" height="401" alt=""> -->
         <div class="detail__info">
-          <h3 class="detail__title">{{ detail.name.common }}</h3>
+          <h3 class="detail__title" v-if="country">{{ country.name.common }}</h3>
           <div class="more-info">
             <div>
               <p class="detail__text">
                 <span class="detail__text--bold">Native Name: </span>
-                <span class="detail__text--small">België</span>
+                <span class="detail__text--small">{{ country }}</span>
               </p>
               <p class="detail__text">
                 <span class="detail__text--bold">Population: </span>
@@ -60,30 +60,21 @@
 
 <script>
 export default {
-  name: 'Detail',
-  // props: ['countries'],
+  props: ['alphaCode'],
   data() {
     return {
-      KEY: `https://restcountries.com/v3.1/all`,
-      countries: []
+      country: null,
+      KEY: `https://restcountries.com/v3.1/alpha/`
     }
   },
   methods: {
     async getData() {
-      const reques = await fetch(this.KEY)
-      return reques.json()
+      const request = await fetch(this.KEY + this.alphaCode)
+      request.json()
     }
   },
-  created() {
-    this.getData().then((data) => data)
-  },
-  computed: {
-    detailId() {
-      return parseInt(this.$route.id)
-    },
-    detail() {
-      return countries.find(detail => detail.id === this.detailId)
-    }
+  mounted() {
+    this.getData().then((data) => this.country = data)
   }
 }
 </script>

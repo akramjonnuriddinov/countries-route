@@ -1,10 +1,8 @@
 <template>
-  <div class="card" v-for="country in countries">
+  <div class="card">
     <img class="card__img" :src="country.flags.png" width="267" height="160" alt="">
     <div class="card__content">
-      <router-link :to="'/detail' + country.id">
-        <h1 class="card__title">{{ country.name.common }}</h1>
-      </router-link>
+      <h1 class="card__title">{{ country.name.common }}</h1>
       <p class="card__text">
         <span class="card__text--bold">Population: </span>
         <span class="card__text--small">{{ country.population }}</span>
@@ -19,34 +17,20 @@
       </p>
     </div>
   </div>
-  <router-view></router-view>
 </template>
 
 <script>
 export default {
   name: 'Card',
-  data() {
-    return {
-      KEY: `https://restcountries.com/v3.1/all`,
-      countries: []
+  props: {
+    country: {
+      type: Object
     }
-  },
-  methods: {
-    async getData() {
-      const request = await fetch(this.KEY)
-      return request.json()
-    }
-  },
-  created() {
-    this.getData().then((data) => {
-      this.countries = data
-      console.log(data)
-    })
   }
 }
 </script>
 
-<style scoped>
+<style>
 .card {
   max-width: 264px;
   border-radius: 5px;

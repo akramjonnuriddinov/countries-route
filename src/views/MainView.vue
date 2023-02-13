@@ -3,7 +3,15 @@
     <SearchForm />
     <div class="container">
       <div class="card-wrapper">
-        <Card />
+        <div v-for="country in countries" :key="country.cca2">
+          <router-link :to="{
+            name: 'detail',
+            params: {
+              alphaCode: country.cca2
+            }
+          }"><Card :country="country"/>
+          </router-link>
+        </div>
       </div>
     </div>
   </main>
@@ -18,6 +26,24 @@ export default {
   components: {
     SearchForm,
     Card
+  },
+  data() {
+    return {
+      KEY: `https://restcountries.com/v3.1/all`,
+      countries: []
+    }
+  },
+  methods: {
+    async getData() {
+      const request = await fetch(this.KEY)
+      return request.json()
+    }
+  },
+  created() {
+    this.getData().then((data) => {
+      this.countries = data
+      console.log(data)
+    })
   }
 }
 </script>
