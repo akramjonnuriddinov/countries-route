@@ -22,14 +22,16 @@ export default {
   --shadow-color: #0000000E;
   --text-color: #111517;
   --gray: #848484;
+  --border-color: #979797;
   --main-bg: #FAFAFA;
 }
 
 .dark-mode {
   --white: #2B3844;
+  --shadow-color: rgba(0, 0, 0, 0.0562443);
   --text-color: #fff;
   --gray: #fff;
-  --shadow-color: rgba(0, 0, 0, 0.0562443);
+  --border-color: transparent;
   --main-bg: #202C36;
 }
 

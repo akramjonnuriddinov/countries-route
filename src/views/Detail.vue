@@ -51,6 +51,20 @@
               </p>
             </div>
           </div>
+          <div class="border-countries">
+            <h4 class="border-countries__title">Border Countries: </h4>
+            <div class="border-countries__list">
+              <router-link class="border-countries__link" tag="a" :to="{
+                name: 'detail',
+                params: {
+                  alphaCode: 'en'
+                }
+              }">
+                <Route :border_countries="border_countries" />
+              </router-link>
+              <router-view></router-view>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -58,8 +72,13 @@
 </template>
 
 <script>
+import Route from '@/components/Route.vue'
+
 export default {
   props: ['alphaCode'],
+  components: {
+    Route
+  },
   data() {
     return {
       country: [],
@@ -69,19 +88,24 @@ export default {
       img_url: '',
       languages: '',
       currencies: '',
-      domain: ''
+      domain: '',
+      border_countries: [],
+      cca2: ''
     }
   },
   mounted() {
     this.getData().then((data) => {
-      this.country = data[0]
       console.log(data[0])
+      this.country = data[0]
       this.capital = this.country.capital[0]
       this.name = this.country.name.common
       this.img_url = this.country.flags.png
       this.languages = this.country.languages
       this.currencies = this.country.currencies
       this.domain = this.country.tld[0]
+      this.border_countries = this.country.borders
+      this.cca2 = this.country.cca2
+      console.log(this.cca2)
     })
   },
   methods: {
@@ -159,5 +183,26 @@ export default {
   padding: 10px 39px 10px 32px;
   cursor: pointer;
   margin-bottom: 80px;
+}
+
+.border-countries {
+  display: flex;
+  margin-top: 68px;
+}
+
+.border-countries__title {
+  margin: 0;
+  margin-right: 15px;
+}
+
+.border-countries__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.border-countries__link {
+  text-decoration: none;
+  color: var(--text-color);
 }
 </style>

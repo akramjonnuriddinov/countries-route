@@ -42,7 +42,6 @@ export default {
   mounted() {
     this.getData().then((data) => {
       this.countries = data
-      console.log(data)
     })
   }
 }
