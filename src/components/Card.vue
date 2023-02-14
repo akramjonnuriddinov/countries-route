@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      capital: this.country.capital[0]
+      capital: this.country.capital
     }
   }
 }
